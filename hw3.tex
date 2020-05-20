@@ -1,0 +1,449 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{CS499 Homework 3}}\vspace{1mm}}}
+\begin{center}
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Zehao Wang\quad Student ID:518021910976}
+\end{center}
+
+\begin{enumerate}
+    \item 
+        When we analyzed the Josephus problem in Chapter 1, we represented an arbitrary positive integer $n$ in the form $n=2^m+l$, where $0\le l <2^m$. Give explicit formulas for $l$ and $m$ as functions of $n$, using floor and/or ceiling brackets.
+        \begin{solution}
+        	$m=\lfloor \log_2(n)\rfloor$ and $l=n-2^{\lfloor \log_2(n)\rfloor}$.Proof is as follows.
+        	
+        	In Chapter 1, we declare that $0\le l<2^m$. Therefore 
+        	\begin{equation*}
+        	2^m\le n= 2^m+l<2^{m+1}
+        	\end{equation*}
+        	
+        	Therefore we have:
+        	\begin{equation*}
+        	    m \le \log_2{n} = \log_2{2^m+l} < \log_2{2^m+2^m} =m+1
+        	\end{equation*}
+        	
+        	Therefore
+        	\begin{equation*}
+        	    m \le \log_2{n} < m+1
+        	\end{equation*}
+        	
+        	By definition, $m=\lfloor \log_2(n)\rfloor$ and $l=n-2^m=n-2^{\lfloor \log_2{n}\rfloor}$.
+        \end{solution}
+    \item 
+        What is a formula for the nearest integer to a given real number $x$? In case of ties, when $x$ is exactly halfway between two integers, give an expression that rounds (a) up,that is,to $\lceil x\rceil$; (b) down,that is, to $\lfloor x \rfloor$.
+        \begin{solution}
+        	\begin{enumerate}
+        		\item 
+        		    $\lfloor x+0.5 \rfloor$.
+        		    
+        		    \quad\textbf{Proof.}
+        		        \begin{itemize}
+        		        	\item 
+        		        	When $\{x\}<0.5$, $0.5<\{x\}+0.5<1$ and the nearest integer is $\lfloor x \rfloor$.
+        		        	
+        		        	Therefore $\lfloor x+0.5 \rfloor=\lfloor\lfloor x \rfloor+\{x\}+0.5  \rfloor=\lfloor x \rfloor+\lfloor \{x\}+0.5 \rfloor=\lfloor x \rfloor$.
+        		        	\item 
+        		        	When $\{x\}>0.5$,$\{x+0.5\}>1$ and the nearest interger is $\lceil x \rceil$ .
+        		        	
+        		        	Therefore $\lfloor x+0.5 \rfloor=\lfloor \lfloor x \rfloor +\{x\} +0.5\rfloor=\lfloor x \rfloor + \lfloor \{x\}+0.5 \rfloor=\lfloor x \rfloor +1=\lceil x \rceil$.
+        		        	\item 
+        		        	When ${x}=0.5$, the nearest integer ought to be $\lceil x \rceil$.This time the integer part of $x+0.5$ is $\lfloor x \rfloor +1=\lfloor x+0.5 \rfloor$.
+        		        \end{itemize}
+        	    \item 
+        	        $\lceil x-0.5 \rceil$.
+        	        
+        	        \textbf{Proof.}
+        	        \begin{itemize}
+        	        	\item 
+        	        	    When $\{x\}=0.5$,the nearest integer should be $\lfloor x\rfloor$.
+        	        	    
+        	        	    $\lceil x-0.5 \rceil=\lceil \lfloor x \rfloor+\{x\}-0.5\rceil=\lceil \lfloor x \rfloor \rceil=\lfloor x \rfloor$.
+        	        	\item 
+        	        	    When $\{x\}<0.5$,$-0.5<\{x\}-0.5<0$ and the nearest integer should be $\lfloor x \rfloor$.
+        	        	    
+        	        	    $\lceil x-0.5 \rceil=\lceil \lfloor x \rfloor + \{x\} -0.5\rceil=x+\lceil \{x\}-0.5\rceil=\lfloor x\rfloor$.
+        	        	\item 
+        	        	    When $\{x\}>0.5$,$0<\{x\}-0.5<0.5$ and the nearest integer should be $\lfloor x\rfloor +1$.
+        	        	    
+        	        	    Therefore $\lceil x-0.5 \rceil=\lceil \lfloor x \rfloor +\{x\}-0.5 \rceil=\lfloor x\rfloor+\lceil \{x\}-0.5\rceil=\lfloor x\rfloor+1$.
+        	        \end{itemize}
+        	\end{enumerate}
+        \end{solution}
+    \item 
+        Evaluate $\lfloor\lfloor m\alpha\rfloor n/\alpha \rfloor$, when $m$ and $n$ are positive integers and $\alpha$ is an irrational number greater than $n$.
+        \begin{solution}
+        	\begin{equation*}
+        	    \lfloor \frac{\lfloor m\alpha \rfloor n}{\alpha} \rfloor
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\lfloor \frac{(m\alpha-\{m \alpha \})n}{\alpha} \rfloor
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\lfloor mn-\frac{\{m\alpha \}n}{\alpha} \rfloor
+        	\end{equation*}
+        	Because $\alpha$ is an irrational number greater than $n$, therefore $\frac{n}{\alpha}<1$.
+        	
+        	Considering $\{m\alpha \}<1$, we can get $\frac{\{m\alpha\}n}{\alpha}<1$.
+        	
+        	Therefore $\lfloor mn-\frac{\{m\alpha \}n}{\alpha}
+        	\rfloor=mn-1$.
+        \end{solution}
+    \item 
+        The text describes problems at levels 1 through 5. What is a level 0 problem? (This, by the way, is not a level 0 problem).
+        \begin{solution}
+        	Problems which just need guessing but not proving.
+        \end{solution}
+    \item 
+        Find a necessary and sufficient condition that $\lfloor nx \rfloor=n\lfloor x \rfloor$, when $n$ is a positive integer. (Your condition should involve $\{x\}$.)
+        \begin{solution}
+        	For any real number $x$, we have 
+        	\begin{equation*}
+        	    x=\lfloor x \rfloor + \{x\}
+        	\end{equation*}
+        	Therefore 
+        	\begin{equation*}
+        	    \lfloor nx \rfloor=\lfloor n(\lfloor x \rfloor+\{x\})\rfloor=\lfloor n\lfloor x \rfloor+n\{x\}\rfloor.
+        	\end{equation*}
+        	\begin{equation*}
+        	   \Rightarrow \lfloor n \lfloor x \rfloor\rfloor + n \{x\}=n \lfloor x \rfloor.
+        	\end{equation*}
+        	\begin{equation*}
+        	   \Rightarrow n\lfloor x \rfloor +\lfloor n\{x\} \rfloor=n \lfloor x \rfloor
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow\lfloor n\{x\} \rfloor=0
+        	\end{equation*}
+        	We know $\lfloor n\{x\} \rfloor=0$ iff $0\le n\{x\}<1$
+        	Therefore the necessary and sufficient condition is:
+        	\begin{equation*}
+        	    0\le\{x\}<\frac{1}{n}
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Can something interesting be said about $\lfloor f(x) \rfloor$ when $f(x)$ is a continuous, monotonically decreasing function that takes integer values only when $x$ is an integer?
+        \begin{solution}
+        	\begin{equation*}
+        	    \lfloor f(x) \rfloor=\lfloor f(\lceil x \rceil) \rfloor
+        	\end{equation*}
+        	\textbf{Proof.}
+        	\begin{itemize}
+        		\item 
+        		    If $x$ is an integer, then it is obviously true.
+        		\item 
+        		    If $x$ is not an integer, then $x<\lceil x \rceil$.
+        		    
+        		    Because $f(x)$ is a monotonically decreasing function, therefore we have $f(x)>f(\lceil x \rceil)$.
+        		    
+        		    Because $f(x)>f(\lceil x\ rceil)$, therefore we have 
+        		    \begin{equation*}
+        		        \lfloor f(x) \rfloor\ge \lfloor f(\lceil x \rceil) \rfloor
+        		    \end{equation*}
+        		    
+        		    Assumes that $\lfloor f(x) \rfloor> \lfloor f(\lceil x \rceil) \rfloor$.
+        		    
+        		    $x$ is not an integer, so $f(x)$ is not an integer ,therefore we have:
+        		    \begin{equation*}
+        		        f(x)>\lfloor f(x) \rfloor>\lfloor f(\lceil x \rceil) \rfloor
+        		    \end{equation*} 
+        		    Because $n>\lfloor x \rfloor\Rightarrow n>x$, therefore we have:
+        		    \begin{equation*}
+        		        f(x)>\lfloor f(x) \rfloor>f(\lceil x \rceil)
+        		    \end{equation*}
+        		    Because $f(x)$ is a continuous function, therefore $\exists$ integer $y$, which satisfies $f(y)=\lfloor f(x) \rfloor$ and $x<y<\lceil x \rceil$.
+        		    
+        		    But there can not be any integer $y$ which satisfies $x<y<\lceil x \rceil$.
+        		    
+        		    Therefore the assumption does not make sense.
+        		    
+        		    Therefore $\lfloor f(x) \rfloor=\lfloor f(\lceil x \rceil) \rfloor$
+        		    
+        	\end{itemize}
+        	
+        	
+        	
+        	
+        	
+        \end{solution}
+    \item
+        Solve the recurrence.
+        \begin{equation*}
+            \begin{cases}
+                X_n=n&for\quad 0\le n <m\\
+                X_n=X_{n-m}+1&for\quad n\ge m
+            \end{cases}
+        \end{equation*}
+        \begin{solution}
+            When $n\ge m$,there exist integers $k,b$ which satisfy that $n=km+b$ and $k=\lfloor \frac{n}{m}\rfloor$.
+            This time $b=n-m\cdot \lfloor \frac{n}{m} \rfloor=n\ mod\ m<m$.
+            Therefore We have:
+            \begin{equation*}
+                     X_n=X_{n-m}+1
+            \end{equation*}
+            \begin{equation*}
+                    X_{n-m}=X_{n-2m}+1
+            \end{equation*}
+            \begin{equation*}
+                \cdots
+            \end{equation*}
+            \begin{equation*}
+                X_{n-(k-1)m}=X_{n-km}+1
+            \end{equation*}
+            \begin{equation*}
+               X_{n-km}=n-km=b
+            \end{equation*}
+            Add the equations together, we have:
+            \begin{equation*}
+                X_n=k+b=\lfloor \frac{n}{m} \rfloor+n\ mod\ \lfloor \frac{n}{m} \rfloor.
+            \end{equation*}
+            Therefore 
+            \begin{equation*}
+                X_n=
+                \begin{cases}
+                    \lfloor \frac{n}{m} \rfloor+n\ mod\ \lfloor \frac{n}{m} \rfloor&n\ge m\\
+                    n&n<m  
+                \end{cases}
+            \end{equation*}
+        \end{solution}
+    \item 
+        Prove the Dirichlet box principle: If $n$ objects are put into $m$ boxes, some box must contain $\ge \lceil n/m \rceil$ objects, and some box must contain $\le \lfloor n/m \rfloor$.
+        \begin{proof}
+            \ \\
+            \begin{itemize}
+            	\item 
+            	    If all boxes contain less than $\lceil \frac{n}{m} \rceil$ objects,then all the box contain at most $m\cdot(\lceil \frac{n}{m} \rceil-1 )$ objects.
+            	    
+            	    But $m\cdot(\lceil \frac{n}{m} \rceil-1 )\ge n$ is impossible because $\lceil \frac{n}{m} \rceil-1\ge \frac{n}{m}$ is impossible.
+            	    
+            	    Therefore at least one box must contain $\ge \lceil \frac{n}{m} \rceil$ objects.
+            	\item 
+            	    If all boxes contain more than $\lfloor \frac{n}{m} \rfloor$ objects, then all the boxes contain at least $m\cdot(\lfloor \frac{n}{m}\rfloor+1)$ objects.
+            	    
+            	    But $m\cdot(\lfloor \frac{n}{m}\rfloor+1)\le n$ is impossible because $\lfloor \frac{n}{m} \rfloor+1\le \frac{n}{m}$ is impossible.
+            	    
+            	    Therefore at least one box must contain $\le \lfloor \frac{n}{m} \rfloor$ objects.
+            \end{itemize}
+        \end{proof}
+    \item 
+        Egyptian mathematicians in 1800 B.C.  represented rational numbers between 0 and 1 as sums of unit fractions $\frac{1}{x_1}+\frac{1}{x_2}+\cdots+\frac{1}{x_k}$, where the $x$'s were distinct positive numbers. For example, they wrote $\frac{1}{3}+\frac{1}{15}$ instead of $\frac{2}{5}$. Prove that it is always possible to do this in a systematic way: If $0<\frac{m}{n}<1$, then
+        \begin{equation*}
+            \frac{m}{n}=\frac{1}{q}+\{representation\ of\ \frac{m}{n}-\frac{1}{q}\},\quad q=\lceil \frac {n}{m}\rceil.
+        \end{equation*} 
+        \begin{solution}
+        	\begin{equation*}
+        	    \frac{m}{n}-\frac{1}{q}=\frac{m\lceil \frac{n}{m}\rceil -n}{n\lceil \frac{n}{m} \rceil}.
+        	\end{equation*}
+        	Let $n=km+b$, where $k=\lfloor \frac{n}{m} \rfloor$ and $b=n\ mod\ m$.Then we can get :
+        	\begin{equation*}
+        	    \frac{m\lceil \frac{n}{m}\rceil -n}{n\lceil \frac{n}{m} \rceil}=\frac{m(k+1)-mk-b}{n\lceil \frac{n}{m}\rceil}=\frac{m-n\ mod\ m}{n\lceil \frac{n}{m}\rceil}
+        	\end{equation*}
+        	Because $0<n\ mod\ m<m$($n\ mod\ m$ can not be $0$ because $n$ and $m$ are relatively prime), we can get $0<m-n\ mod\ m<m$.
+        	
+        	%Because $0<\frac{m}{n}<1$, we can get $\lceil \frac{n}{m} \rceil>1$.Therefore $n\lceil \frac{n}{m}\rceil>n$.
+        	
+        	Let $m'=m-n\ mod\ m<m$,$n'=n\lceil \frac{n}{m}\rceil$ and $q'=\lceil \frac{n'}{m'} \rceil$, then we have:
+        	\begin{equation*}
+        	    q'=\lceil\lceil\frac{n}{m}\rceil\times\frac{n}{m=m\ mod\ m}\rceil=\lceil q\times\frac{n}{m-n\ mode\ m}\rceil.
+        	\end{equation*}
+            Because we have
+            \begin{equation*}
+            	\frac{n}{m-n\ mode\ m}=\frac{km+b}{m'}\ge\frac{km}{m'}>k\ge 1
+            \end{equation*}
+            Therefore
+        	\begin{equation*}
+        	    q\times\frac{n}{m-n\ mode\ m}>q.
+        	\end{equation*}
+        	Because $q$ is an integer, then we have:
+        	\begin{equation*}
+        	    q'=\lceil q\times\frac{n}{m-n\ mod\ m}\rceil>q
+        	\end{equation*}
+        	This means $x_k$'s are increasing, which satisfies the $x_k$'s are distinct positive integers.
+        	
+        	Because $m'<m$, therefore the numerator part of $\frac{m}{n}$ is decreasing, which guarantees that $m$ will descend to 1 and terminate the procedure after finitely many steps.
+        	
+        	Therefore, it is always possible to do this in a systematic way.
+        	
+        \end{solution}
+    \item 
+        What is the smallest positive integer that has exactly $k$ divisors, for $1\le k\le 6$?
+        \begin{solution}
+        	\begin{itemize}
+        		\item 
+        		    $1$ is the smallest positive integer with exactly $1$ divisors.
+        		\item 
+        		    $2$ is the smallest positive integer with exactly $2$ divisors.
+        		\item 
+        		    $4$ is the smallest positive integer with exactly $3$ divisors.
+        		\item 
+        		    $6$ is the smallest positive integer with exactly $4$ divisors.
+        		\item 
+        		    $16$ is the smallest positive integer with exactly $5$ divisors.
+        		\item 
+        		    $12$ is the smallest positive integer with exactly $6$ divisors.
+            \end{itemize}
+        \end{solution}
+    \item 
+        Prove that $gcd(m,n)\cdot lcm(m,n)=m\cdot n$, and use this identity to express $lcm(m,n)$ in terms of $lcm(n mod m,m)$m when $n mod m \neq 0$.{\color{blue}(Hint: Use (4.12), (4.14) and (4.15).}
+        \begin{proof}
+        	\begin{enumerate}
+        		\item 
+        		\begin{equation}\label{L1}
+        		m=\prod_{p}p^{m_p}
+        		\end{equation}
+        		\begin{equation}\label{L2}
+        		n=\prod_{p}p^{n_p}
+        		\end{equation}
+        		\begin{equation}\label{L3}
+        		gcd(m,n)=\prod_{p}p^{min(m_p,n_p)}
+        		\end{equation}
+        		\begin{equation}\label{L4}
+        		lcm(m,n)=\prod_{p}p^{max(m_p,n_p)}
+        		\end{equation}
+        		Multiply (\ref{L3}) and (\ref{L4}) we can get
+        		\begin{equation}
+        		gcd(m,n)lcm(m,n)=\prod_{p}p^{min(m_p,n_p)+max(m_p,n_p)}=\prod_{p}p^{m_p+n_p}
+        		\end{equation}
+        		Considering (\ref{L1}) and (\ref{L2}), we can get
+        		\begin{equation}\label{L5}
+        		gcd(m,n)lcm(m,n)=mn
+        		\end{equation}
+        		\item 
+        		We know that 
+        		\begin{equation}\label{L6}
+        		    gcd(m,n)=gcd(n\ mod\ m,m)
+        		\end{equation}
+        		Considering (\ref{L5}), we can get:
+        		\begin{equation}\label{L7}
+        		    gcd(n\ mod\ m,m)lcm(n\ mod\ m)=m(n\ mod\ m)
+        		\end{equation}
+        		According to (\ref{L6}) and (\ref{L7}), we can get:
+        		\begin{equation*}
+        		    gcd(m,n)lcm(n\ mod\ m,m)=m(n\ mod\ m)
+        		\end{equation*}
+        		Considering (\ref{L5}), we can get:
+        		\begin{equation*}
+        		    \frac{mn}{lcm(m,n)}\times lcm(n\ mod\ m,n)=m(n\ mod\ m)
+        		\end{equation*}
+        		Therefore
+        		\begin{equation*}
+        		    lcm(m,n)=\frac{n\cdot lcm(n\ mod\ m,m)}{n\ mod\ m}.
+        		\end{equation*}
+        	\end{enumerate}
+        	 
+             
+        \end{proof}
+    \item 
+        Let $\pi(x)$ be the number of primes not exceeding $x$. Prove or disprove:
+        \begin{equation*}
+            \pi(x)-\pi(x-1)=[x\ is\ a\ prime].
+        \end{equation*} 
+        \begin{solution}
+        	This statement is not true.
+        	
+        	By definition,$\pi(x)=\sum_{i\le x}[i\ is\ a\ prime]$.
+        	
+        	Therefore $\pi(x-1)=\sum_{i\le x-1}[i\ is\ a\ prime]$.
+        	
+        	Therefore $\pi(x)-\pi(x-1)=\sum_{i\le x}[i\ is\ a\ prime]-\sum_{i\le x-1}[i\ is\ a\ prime]=\sum_{x-1<i\le x}[i\ is\ a\ prime]%=[x\ is\ a\ prime]%.
+        	$
+        	If $x$ is an integer, $\sum_{x-1<i\le x}[i\ is\ a\ prime]=[x\ is\ a\ prime]$.
+        	
+        	But if $x$ is not an integer, $x$ is not taken into consideration when defining primes.
+        	
+        	Therefore $\pi(x)=\sum_{i<=\lfloor x \rfloor}[i\ is\ a\ prime]+\sum_{\lfloor x\rfloor<i\le x}[i\ is\ a\ prime]=\sum_{i<=\lfloor x \rfloor}[i\ is\ a\ prime]+0=\sum_{i<=\lfloor x \rfloor}[i\ is\ a\ prime]$ 
+        	
+        	Therefore
+        	\begin{equation*}
+        	    \pi(x)=\pi(\lfloor x \rfloor)
+        	\end{equation*}
+        	
+        	Therefore
+        	\begin{equation*}
+        	\pi(x)-\pi(x-1)=\pi(\lfloor x\rfloor)-\pi(\lfloor x-1\rfloor)=\pi(\lfloor x\rfloor)-\pi(\lfloor x\rfloor-1)=[\lfloor x \rfloor\  is\ a\ prime]
+        	\end{equation*}
+        	
+        	Therefore the right formula is:
+        	\begin{equation*}
+        	    \pi(x)-\pi(x-1)=[\lfloor x \rfloor\  is\ a\ prime]
+        	\end{equation*}
+        \end{solution}
+    \item 
+        What would happen if the Stern-Brocot construction started with the five fractions ($\frac{0}{1},\frac{1}{0},\frac{0}{-1}\frac{-1}{0}\frac{0}{1}$) instead of with ($\frac{0}{1},\frac{1}{0}$)?
+        \begin{solution}
+        	Between $\frac{1}{0}$ and $\frac{0}{-1}$, we will have a left-right reflected Stern-Brocot tree with all the denominators negated.
+        \end{solution}
+    \item 
+        Find simple formulas for $L^k$ and $R^k$, when $L$ and $R$ are the $2\times2$ matrices of (4.33).
+        \begin{solution}
+        	\begin{equation*}
+        	    L^k=
+        	    \begin{bmatrix}
+        	        1&k\\0&1
+        	    \end{bmatrix}
+        	\end{equation*}
+        	\begin{equation*}
+        	    R^k=
+        	    \begin{bmatrix}
+        	        1&0\\k&1
+        	    \end{bmatrix}
+        	\end{equation*}
+        \end{solution}
+    \item 
+        What does "$a\equiv b(mod 0)$" mean?
+        \begin{solution}
+        	It means $a=b$.
+        	
+        	In Chapter 3, we defined that $x\ mod\ 0=x$.
+        	
+        	$a\equiv b(mod\ 0)$ means $a\ mod\ 0=b\ mod\ 0 $.
+        	
+        	Therefore $a=b$.
+        \end{solution}
+       
+        
+\end{enumerate}
+
+%========================================================================
+\end{document}

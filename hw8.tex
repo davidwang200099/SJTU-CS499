@@ -1,0 +1,222 @@
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{listings}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\def\bangle{ \atopwithdelims \langle \rangle}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{CS499 Homework 8}}\vspace{1mm}}}
+\begin{center}
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Zehao Wang\quad Student ID:518021910976}
+\end{center}
+
+\begin{enumerate}
+    \item 
+        An eccentric collector of $2 \times n$ domino tilings pays \$4 for each vertical domino and \$1 for each horizontal domino. How many tilings are worth exactly \$m by this criterion?
+        \begin{solution}
+        	We can replace horizontal tilings with $z$ and vertical tilings with $z^4$.
+        	
+        	Then the generating function will turn into $\frac{1}{1-z^4-z^2}$.
+        	
+        	Because
+        	\begin{equation*}
+        	    \frac{1}{1-z-z^2}=\sum_{n \ge 1}F_nz^{n-1}
+        	\end{equation*}
+        	Therefore 
+        	\begin{equation*}
+        	    \frac{1}{1-z^2-z^4}=\sum_{n \ge 1}F_nz^{2n-2}
+        	\end{equation*}
+        	
+        	The number of ways to pay for tilings is just the coefficient of $z^m$ entity.
+        	
+        	Therefore
+        	\begin{itemize}
+        		\item 
+        		    When $m$ is odd, it should be zero.
+        		\item 
+        		    When $m$ is even, it should be $F_{\frac{m}{2}+1}$.
+        	\end{itemize}
+        \end{solution}
+    \item 
+        Give the generating function and the exponential generating function for the sequence $<2,5,13,35,\cdots>$=$2^n+3^n$ in closed form.
+        \begin{solution}
+        	Generating function in closed form:
+        	\begin{equation*}
+        	    \sum_{n \ge 0}(2^n+3^n) z^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{n \ge 0} 2^nz^n+3^nz^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{n \ge 0} (2z)^n +(3z)^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{1}{1-2z}+\frac{1}{1-3z}
+        	\end{equation*}
+        	
+        	Exponential generating function in closed form:
+        	\begin{equation*}
+        	    \sum_{n \ge 0} \frac{2^n+3^n}{n!} z^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{n \ge 0} \frac{1}{n!} ((2z)^n+(3z)^n)
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{n \ge 0} \frac{1}{n!}(2z)^n+\sum_{n \ge 0} \frac{1}{n!}(3z)^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    =e^{2z}+e^{3z}
+        	\end{equation*}
+        \end{solution}
+    \item 
+        What is $\sum_{n\ge0} \frac{H_n}{10^n}$?
+        \begin{solution}
+        	The closed form of generating function of $<H_n>$ is $G(z)=\frac{1}{1-z}\ln \frac{1}{1-z}$.
+        	
+        	Because the convergence radius $\frac{1}{R}=lim_{n \rightarrow \inf} \sqrt[n]{H_n}=1$, therefore the convergence radius of this function is $1$. Therefore when $z=\frac{1}{10}$, the function is convergent.
+        	
+        	Therefore
+        	\begin{equation*} 
+        	\sum_{n\ge0} \frac{H_n}{10^n}=\sum_{n \ge 0} \frac{H_n}{z^n}|_{z=\frac{1}{10}}=\frac{10}{9}\ln \frac{10}{9}
+            \end{equation*}
+        \end{solution}
+    \item 
+        Solve the recurrence
+        \begin{equation*}
+            g_0=1;
+        \end{equation*}
+        \begin{equation*}
+            g_n=g_{n-1}+2g_{n-2}+\cdots+ng_0,\quad for\ n>0
+        \end{equation*}
+        \begin{solution}
+            $<g_n>$ is the convolution of $<n>$ and $<g_n>$. 
+            
+            According to the rule of convolution, we can know that 
+            \begin{equation*}
+                G(z)=\frac{z}{(1-z)^2}G(z)+1
+            \end{equation*}
+            
+            Therefore 
+            \begin{equation*}
+                G(z)=1+\frac{z}{1-3z+z^2}
+            \end{equation*}
+            
+            Therefore $g_n=F_2n+[n=0]$.
+        \end{solution}
+    \item 
+        What is $[z^n](\ln (1-z))^2/(1-z)^{m+1}$?
+        \begin{solution}
+        	Differentiate $(1-z)^{-x-1}$ twice with respect to $x$, we can obtain that
+        	\begin{equation}\label{E1}
+        	    \frac{\ln^2(1-z)}{(1-z)^{x+1}}=\sum_{n \ge 0}\binom{x+n}{n}((H_{x+n}-H_x)^2-(H_{x+n}^{(2)}-H_x^{(2)}))z^n.
+        	\end{equation}
+        	Therefore 
+        	\begin{equation*}
+        	    [z^n](\ln (1-z))^2/(1-z)^{m+1}=\binom{m+n}{n}((H_{m+n}-H_m)^2-\sum_{i=1}^{n}\frac{2}{(x+i)^3})
+        	\end{equation*}
+        	
+        \end{solution}
+    \item 
+        previous exercise to evaluate $\sum_{k=0}^{n}H_kH_{n-k}$.
+        \begin{solution}
+            According to (7.57):
+            \begin{equation*}
+                \frac{1}{1-z}\ln \frac{1}{1-z}=\sum_n H_nz^n
+            \end{equation*}
+            we have:
+            \begin{equation*}
+                \frac{\ln^2 (1-z)}{(1-z)^2}=\sum_n (\sum_k H_kH_{n-k})z^n
+            \end{equation*}
+            Let $x=1$ in (\ref{E1}), we have:
+            \begin{equation*}
+                \frac{\ln^2(1-z)}{(1-z)^{2}}=\sum_{n \ge 0}\binom{1+n}{n}((H_{1+n}-H_1)^2-(H_{1+n}^{(2)}-H_1^{(2)}))z^n
+            \end{equation*}
+            Therefore
+            \begin{equation*}
+                \sum_{k=0}^{n}H_kH_{n-k}
+            \end{equation*}
+            \begin{equation*}
+                =\binom{1+n}{n}((H_{1+n}-H_1)^2-(H_{1+n}^{(2)}-H_1^{(2)}))
+            \end{equation*}
+            \begin{equation*}
+                =(n+1)(H_n^2-H_n^{(2)})-2n(H_n-1)
+            \end{equation*}
+        \end{solution}
+    \item 
+        A robber holds up a bank and demands \$500 in tens and twenties. He also demands to know the number of ways in which the cashier can give him the money. Find a generating function $G(z)$ for which this number is $[z^{500}]G(z)$, and a more compact generating function $\check{G}(z)$ for which this number is $[z^{50}]\check{G}(z)$. Determine the required number of ways by (a).using partial fractions; (b) using a method like (7.39).
+        \begin{solution}
+        	This is giving change with demonimations $10$ and $20$. Therefore 
+        	\begin{equation*}
+        	    G(z)=\frac{1}{(1-z^10)(1-z^20)}=\check{G}(z^{10})
+        	\end{equation*}
+        	\begin{enumerate}
+        		\item 
+        		    The partial fraction decomposition of $\check{G}(z)$ is:
+        		    \begin{equation*}
+        		        \check{G}(z)=\frac{1}{2}\frac{1}{(1-z)^2}+\frac{1}{4}\frac{1}{1-z}+\frac{1}{4}\frac{1}{1+z}
+        		    \end{equation*}
+        		    
+        		    Therefore
+        		    \begin{equation*}
+        		        [z^n]\check{G}(z)=\frac{2n+3+(-1)^n}{4}
+        		    \end{equation*}
+        		    
+        		    Let $n=50$ and we can get $26$ ways to make the payment.
+        		\item 
+        		    Because
+        		    \begin{equation*}
+        		        \check{G}(z)=\frac{1}{(1-z)(1-z^2)}=\frac{1+z}{(1-z^2)^2}=(1+z)(1+2z^2+3z^4+\cdots)
+        		    \end{equation*}
+        		    
+        		    Therefore
+        		    \begin{equation*}
+        		        [z^n]G(z)=\lfloor \frac{n}{2} \rfloor +1
+        		    \end{equation*}
+        		    
+        		    Let $n=50$ and we can get 26 ways.
+        	\end{enumerate}
+        \end{solution}
+\end{enumerate}
+
+%========================================================================
+\end{document}

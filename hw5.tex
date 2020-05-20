@@ -1,0 +1,277 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{CS499 Homework 5}}\vspace{1mm}}}
+\begin{center}
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Zehao Wang\quad Student ID:518021910976}
+\end{center}
+
+\begin{enumerate}
+    \item 
+        What is $11^4$? Why is this number easy to compute, for a person who knows binomial coefficients?
+        \begin{solution}
+        	$11^4=14641$.
+        	
+        	\begin{equation*}
+        	    11^4=(10+1)^4
+        	\end{equation*}
+            \begin{equation*}    
+        	    =\sum_{k} \binom{4}{k} 10^k\times 1^{4-k}
+        	\end{equation*}  
+            \begin{equation*} 
+        	    =\sum_{k=0}^{4} \binom{4}{k} 10^k
+        	\end{equation*}
+            \begin{equation*}   
+        	    =14641
+        	\end{equation*}
+        \end{solution}
+    \item 
+        For which value(s) of $k$ is $\binom{n}{k}$ a maximum, when $n$ is a given positive integer? Prove your answer.
+        \begin{solution}
+        	For any integer $n$, we have:
+        	\begin{equation*}
+        	    \binom{n}{k}=\frac{n^{\underline{k}}}{k!}
+        	\end{equation*}
+        	
+        	Assume that 
+        	\begin{equation}\label{T2_1}
+        	   \frac {\binom{n}{k}}{\binom{n}{k-1}}=\frac{n-k+1}{k}\ge 1
+        	\end{equation}
+        	
+        	and
+        	
+        	\begin{equation}\label{T2_2}
+        	   \frac{\binom{n}{k}}{\binom{n}{k+1}}=\frac{k+1}{n-k}\ge 1
+        	\end{equation}
+        	
+        	According to (\ref{T2_1}), we can get $k\le \frac{n+1}{2}$.
+        	
+        	According to (\ref{T2_2}), we can get $k \ge \frac{n-1}{2}$.
+        	
+        	Therefore,
+        	
+        	When $n$ is an odd number and $k=\frac{n+1}{2}$ or $\frac{n-1}{2}$, $\binom{n}{k}$ is a maximum.
+        	
+        	When $n$ is an even number and $k=\frac{n}{2}$, $\binom{n}{k}$ is a maximum.
+        	
+        \end{solution}
+    \item 
+        Prove the hexagon property,
+        \begin{equation*}
+            \binom{n-1}{k-1}\binom{n}{k+1}\binom{n+1}{k}=\binom{n-1}{k}\binom{n+1}{k+1}\binom{n}{k-1}
+        \end{equation*}
+        
+        \begin{proof}
+        	\begin{equation*}
+        	    \binom{n-1}{k-1}\binom{n}{k+1}\binom{n+1}{k}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{(n-1)^{\underline{k-1}}}{(k-1)!}\times\frac{n^{\underline{k+1}}}{(k+1)!}\times\frac{(n+1)^{\underline{k}}}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{(n-1)(n-2)\cdots(n-k+1)}{(k-1)!}\times\frac{n(n-1)(n-2)\cdots(n-k)}{(k+1)!}\times\frac{(n+1)n\cdots(n-k+2)}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{n(n-1)(n-2)\cdots(n-k)}{(k-1)!}\times\frac{(n-1)(n-2)\cdots(n-k)}{k!}\times\frac{(n+1)n(n-1)\cdots(n-k+2)(n-k+1)}{(k+1)!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{n^{\underline{k-1}}}{(k-1)!}\times\frac{(n-1)^{\underline{k}}}{k!}\times\frac{(n+1)^{\underline{k+1}}}{(k+1)!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\binom{n-1}{k}\binom{n+1}{k+1}\binom{n}{k-1}
+        	\end{equation*}
+        	
+        \end{proof}
+    \item 
+        Evaluate $\binom{-1}{k}$ by negating (actually un-negating) its upper index.
+        \begin{solution}
+        	We have 
+        	\begin{equation*}
+        	    \binom{n}{k}=(-1)^k\binom{n-k-1}{k!}
+        	\end{equation*}
+        	
+        	Therefore
+        	\begin{equation*}
+        	    \binom{-1}{k}=(-1)^k\binom{k-(-1)-1}{k}=(-1)^k\binom{k}{k}=(-1)^k[k\ge 0].
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Let $p$ be prime. Show that $\binom{p}{k}\ mod\ p=0$ for $0<k<p$. What does this imply about the binomial coefficients $\binom{p-1}{k}$?
+        \begin{solution}
+        	Because
+        	
+        	\begin{equation*}
+        	\binom{p}{k}=\frac{p^{\underline{k}}}{k!}=p\times\frac{(p-1)^{\underline{k-1}}}{k!}        	\end{equation*}
+        	
+        Therefore $\binom{p}{k}$ has a factorial $p$. So it is divisible by $p$, namely $\binom{p}{k}\ mod\ p=0$.
+        
+        Because we have
+        \begin{equation*}
+            \binom{p}{k}=\binom{p-1}{k-1}+\binom{p-1}{k}
+        \end{equation*}
+        
+        and
+        \begin{equation*}
+            \binom{p}{k}\equiv 0(mod\ p)
+        \end{equation*}
+        
+        Therefore
+        \begin{equation}\label{EQ}
+            \binom{p-1}{k-1}+\binom{p-1}{k}\equiv 0(mod\ p)
+        \end{equation}
+        
+        As for $\binom{p-1}{k-1}$,we have
+        \begin{equation*}
+            \binom{p-1}{k-1}=\frac{(p-1)\cdots(p-k+1)}{(k-1)!}\equiv\frac{(-1)(-2)\cdots(-k+1)}{(k-1)!}(mod\ p)
+        \end{equation*}
+        Because
+        \begin{equation*}
+            \frac{(-1)(-2)\cdots(-k+1)}{(k-1)!}=(-1)^{k-1}
+        \end{equation*}
+        
+        Therefore $\binom{p-1}{k-1}\equiv (-1)^{k-1}(\mod p)$.
+        
+        According to (\ref{EQ}), we can know $\binom{p}{k-1}\equiv (-1)^k(mod\ p)$.
+    \end{solution}
+    \item 
+        Fix up the text's derivation in Problem 6, Section 5.2, by correctly applying symmetry.
+        \begin{solution}
+        	 \begin{equation*}
+        	     \frac{1}{n} \sum_{k} \binom{n+k}{k} \binom{n+1}{k+1}(-1)^k
+        	 \end{equation*}
+        	 \begin{equation*}
+        	     =\frac{1}{n+1} \sum_{k\ge 0} \binom{n+k}{n} \binom{n+1}{k+1}(-1)^k
+        	 \end{equation*}
+        	 \begin{equation*}
+        	     =\frac{1}{n+1} \sum_{k} \binom{n+k}{n} \binom{n+1}{k+1}(-1)^k
+        	 \end{equation*}
+        	 \begin{equation*}
+        	     =-\frac{1}{n+1} \binom{n-1}{n}\binom{n+1}{0}(-1)^{-1}
+        	 \end{equation*}
+        \end{solution}
+    \item 
+        Is (5.34) true also when $k<0$?
+        \begin{solution}
+            Yes.Proof is as follows.
+            
+            When $k<0$, 
+            \begin{equation*}
+                r^{\underline{k}}(r-\frac{1}{2})^{\underline{k}}
+            \end{equation*}
+            \begin{equation*}
+                =\frac{1}{(r+1)(r+2)\cdots(r+|k|)}\times \frac{1}{(r+\frac{1}{2})(r+\frac{1}{2}+1)\cdots(n+\frac{1}{2}+|k|-1)}
+            \end{equation*}
+            \begin{equation*}
+                =\frac{2^{|k|}}{(2r+2)(2r+4)\cdots(2r+2|k|)}\times\frac{2^{|k|}}{(2r+1)(2r+3)(2r+5)\cdots(2r+2|k|-1)}
+            \end{equation*}
+            \begin{equation*}
+                =2^{2|k|}\times (2r)^{\underline{2|k|}}
+            \end{equation*}
+            \begin{equation*}
+                =\frac{(2r)^{\underline{2k}}}{2^{2k}}
+            \end{equation*}
+        \end{solution}
+    \item 
+        Evaluate 
+        \begin{equation*}
+            \sum_{k} \binom{n}{k} (-1)^k(1-\frac{k}{n})^n
+        \end{equation*}
+        What is the approximate value of this sum, when $n$ is very large?
+        \begin{solution}
+        	According to (5.42):
+        	\begin{equation*}
+        	   \sum_{k}\binom{n}{k}(-1)^k(a_0+a_1k+\cdots+a_kk^n)=(-1)^nn!a_n
+        	\end{equation*}
+        	We can derive that:
+        	\begin{equation*}
+        	    \sum_{k} \binom{n}{k} (-1)^k(1-\frac{k}{n})^n
+        	\end{equation*}
+        	\begin{equation*}
+        	     =(-1)^n\times n!\times (-1)^n\times (\frac{1}{n})^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{n!}{n^n}
+        	\end{equation*}
+        	According to Stirling's Approximation:
+        	\begin{equation*}
+        	    n!\sim\sqrt{2\pi n}(\frac{n}{e})^n
+        	\end{equation*}
+        	We can know that when $n$ is very large,
+        	\begin{equation*}
+        	    \frac{n!}{n^n}\sim\frac{\sqrt{2\pi n}}{e^n}
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Show that the generalized exponentials of (5.58) obey the law
+        \begin{equation*}
+            \epsilon_t(z)=\epsilon(tz)^{\frac{1}{t}},\ if\ t\neq 0
+        \end{equation*}
+        where $\epsilon(z)$ is an abbreviation for $\epsilon_1(z)$.
+        \begin{solution}
+        	\begin{equation*}
+        	    \epsilon_t(z)^{t}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{k\ge 0}t(tk+t)^{k-1}\frac{z^k}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{k\ge 0}t^k(k+1)^{k-1}\frac{z^k}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_{k\ge 0}(k+1)^{k-1}\frac{(tz)^k}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\epsilon(tz)
+        	\end{equation*}
+        	Therefore
+        	\begin{equation*}
+        	    \epsilon_t(z)=\epsilon(tz)^{\frac{1}{t}},\ if\ t\neq 0
+        	\end{equation*}
+        \end{solution}
+\end{enumerate}
+
+%========================================================================
+\end{document}

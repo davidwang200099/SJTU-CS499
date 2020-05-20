@@ -1,0 +1,249 @@
+\documentclass[12pt,a4paper]{article}
+%\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{float}
+\usepackage{multirow}
+
+\hypersetup{colorlinks=true,linkcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{CS499 Homework 9}}}}
+\begin{center}
+\footnotesize{\color{blue}$*$ Name:Zehao Wang  \quad Student ID:518021910976}
+\end{center}
+
+\begin{enumerate}
+    \item 
+        The general expansion theorem for rational functions $\frac{P(z)}{Q(z)}$ is not completely general, because it restricts the degree of $P$ to be less than the degree of $Q$. What happens if $P$ has a larger degree than this?
+        \begin{solution}
+        	If $P$ has a larger degree, then $\frac{P(Z)}{Q(z)}$ can be transformed into $S(z)+T(z)$, where $S(z)$ is a fraction and $T(z)$ is a polynomial. The degree of the numerator of $S$ is smaller than that of the denominator of $S$. When calculating the coefficient of $\frac{P(z)}{Q(z)}$, the coefficient of $T(z)$ should be taken into account.
+        \end{solution}
+    \item 
+        Find a generating function $S(z)$ such that
+        \begin{equation*}
+            [z^n]S(z)=\sum_{k}\binom{r}{k}\binom{r}{n-2k}
+        \end{equation*}
+        \begin{solution}
+        	$S(z)$ is the convolution of $\sum_k\binom{r}{k}z^k$ and $\sum_k\binom{r}{n-2k}z^{2k}$.
+        	
+        	We have 
+        	\begin{equation*}
+        	    \sum_k \binom{r}{k}z^k=(1+z)^r
+        	\end{equation*}
+        	and
+        	\begin{equation*}
+        	    \sum_k \binom{r}{2k}z^{2k}=(1+z^2)^r
+        	\end{equation*}
+        	Therefore
+        	\begin{equation*}
+        	    S(z)=(1+z)^r(1+2z)^r
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Set $r=s=-\frac{1}{2}$ in identity (7.62) and then remove all occurrences of $1/2$ by using tricks like (5.36). What amazing identity do you deduce?
+        \begin{solution}
+        	Let $r=s=-\frac{1}{2}$, and we can get:
+        	\begin{equation*}
+        		\sum_k \binom{k-\frac{1}{2}}{k}\binom{n-k+\frac{1}{2}}{n-k}(H_{k-\frac{1}{2}}-H_{-\frac{1}{2}})=\binom{n}{n}(H_{n+1}-H_{0})
+        	\end{equation*}
+        	Applying (5.36) to the formula above, we can get:
+        	\begin{equation*}
+        	    \sum_k \frac{1}{2^{2k}}\binom{2k}{k}\frac{1}{2^{2n-2k}}\binom{2n-2k}{n-k}(H_{k-\frac{1}{2}}-H_{-\frac{1}{2}})=H_n
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow 4^nH_n=\sum_k\binom{2k}{k}\binom{2n-2k}{n-k}(\frac{1}{k-\frac{1}{2}}+\frac{1}{k-\frac{3}{2}}+\cdots+\frac{1}{\frac{1}{2}})
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow 4^nH_n=\sum_k\binom{2k}{k}\binom{2n-2k}{n-k}2(\frac{1}{2k-1}+\frac{1}{2k-3}+\cdots+1)
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow 4^nH_n=\sum_k\binom{2k}{k}\binom{2n-2k}{n-k}(2H_{2k}-H_k)
+        	\end{equation*}
+        	Therefore, the amazing identity is:
+        	\begin{equation*}
+        	    4^nH_n=\sum_k\binom{2k}{k}\binom{2n-2k}{n-k}(2H_{2k}-H_k)
+        	\end{equation*}
+        \end{solution}
+    \item 
+        This problem, whose three parts are independent, gives practice in the manipulation of generating functions. We assume that $A(z)=\sum_n a_nz^n$, $B(z)=\sum_n b_nz^n$, $C(z)=\sum_n c_nz^n$, and that the coefficients are zero for negative $n$.
+        \begin{enumerate}
+        	\item 
+        	    If $c_n=\sum_{j+2k\le n} a_jb_k$, express $C$ in terms of $A$ and $B$.
+        	\item 
+        	    If $nb_n=\sum_{k=0}^{n}2^ka_k/(n-k)!$, express $A$ in terms of $B$.
+        	\item 
+        	    If $r$ is a real number and if $a_n=\sum_{k=0}^{n}\binom{r+k}{k}b_{n-k}$, express $A$ in terms of $B$; then use your formula to find coefficients of $f_k(r)$ such that $b_n=\sum_{k=0}^{n}f_k(r)a_{n-k}$.
+        \end{enumerate}
+        \begin{solution}
+        	\begin{enumerate}
+        		\item 
+        		    We have
+        		    \begin{equation*}
+        		        \sum_k b_kz^{2k}=B(z^2).
+        		    \end{equation*}
+        		    Therefore $C$ is the convolution of $A(z)$ and $B(z^2)$.
+        		    Therefore
+        		    \begin{equation*}
+        		        C(z)=A(z)B(z^2)
+        		    \end{equation*}
+        		\item 
+        		    We have
+        		    \begin{equation*}
+        		        \sum_n nb^nz^n=zB'(z)
+        		    \end{equation*}
+        		    The right hand side is the convolution of $\sum_k 2^ka_kz^k$ and $\sum_k \frac{1}{k!}z^k$.
+        		    
+        		    We have
+        		    \begin{equation*}
+        		        \sum_k 2^ka_kz^k=\sum_k a_k(2z)^k=A(2z)
+        		    \end{equation*}
+        		    
+        		    and
+        		    \begin{equation*}
+        		        \sum_k \frac{1}{k!}=e^z
+        		    \end{equation*}
+        		    
+        		    Therefore
+        		    \begin{equation*}
+        		        zB'(z)=e^zA(2z)
+        		    \end{equation*}
+        		    Therefore
+        		    \begin{equation*}
+        		        A(z)=\frac{\frac{z}{2}B'(\frac{z}{2})}{e^{\frac{z}{2}}}
+        		    \end{equation*}
+        		\item 
+        		    Because we have
+        		    \begin{equation*}
+        		        \sum_k \binom{r+k}{k}z^k=\frac{1}{(1-z)^{r+1}}
+        		    \end{equation*}
+        		    and $\sum_k a_kz^k$ is the convolution of $\sum_k \binom{r+k}{k}z^k$ and $\sum_k b_kz^k$.
+        		    
+        		    Therefore 
+        		    \begin{equation*}
+        		        A(z)=\frac{B(z)}{(1-z)^{r+1}}.
+        		    \end{equation*}
+        		    
+        		    Therefore we also have
+        		    \begin{equation*}
+        		        B(z)=(1-z)^{r+1}A(z)
+        		    \end{equation*}
+        		    Therefore
+        		    \begin{equation*}
+        		        f_k(r)=\binom{r+1}{k}(-1)^k
+        		    \end{equation*}
+        	\end{enumerate}
+        \end{solution}
+    \item 
+        Let $P$ be the sum of all ways to "triangulate" polygons. Define a "multiplication" operation $A \triangle B$ on triangulated polygons $A$ and $B$ so that the equation
+        \begin{equation*}
+            P=\_+P\triangle P
+        \end{equation*}
+        is valid. Then replace each triangle by 'z'. What does this tell you about the number of ways t decompose an $n$-gon into triangles?
+        \begin{solution}
+        	We can let $A \triangle B$ means that pasting the base: the line at the bottom of the polygons, of A, to the upper left diagonal of a triangle and pasting the base of B to the upper right diagonal.
+        	
+        	Replace each triangle by $z$ and w can get $P=1+zP^2$. By solving it we can know that it is the generating function of Catalan numbers. The number of ways to triangulate an $n$-gon is $C_{n-2}=\frac{\binom{2n-4}{n-2}}{n-1}$.
+        \end{solution}
+    \item 
+        In how many ways can a $2 \times 2 \times n$ pillar be built out of $2 \times 1 \times 1$ bricks?
+        \begin{solution}
+        	Assume that $a_n$ denotes the number of ways a $2 \times 2 \times n$ pillar can be built out of $2 \times 2 \times 1$ bricks and $b_n$ denotes the number of ways to build a $2 \times 2 \times n$ pillar with a $2 \times 1 \times 1$ brick lost.
+        	
+        	To build a complete $2 \times 2 \times n$ pillar, we can:
+        	\begin{enumerate}
+        		\item 
+        		    Build a $2 \times 2 \times (n-1)$ pillar first. This time we need to add 2 more bricks, either put one on another or in parallel. There are $2a_{n-1}$ ways in total.
+        		\item 
+        		    Build a $2 \times 2 \times (n-2)$ pillar first. This time we need to add 4 more bricks. There is only one way to put them in place.
+        		\item 
+        		    Build a $2 \times 2 \times (n-1)$ pillar with a brick on the top lost. Then there are 2 ways to lose the brick and thus 2 ways to add the lost brick back. There are also 2 ways to add 2 bricks to lengthen the pillar. There are total $4b_{n-1}$ ways.
+        	\end{enumerate}
+            By default, we assume that $a_0=1$.
+            Therefore, we have a recursion:
+            \begin{equation*}
+                a_n=2a_{n-1}+a_{n-2}+4b_{n-1}+[n=0]
+            \end{equation*}
+            As for $b_n$, we can build a $2\times2\times n$ pillar with one brick lost in 2 ways:
+            \begin{enumerate}
+            	\item 
+            	    Build a $2\times2\times (n-1)$ pillar with one brick lost, put the lost brick back, and then add one more brick.
+            	\item 
+            	    Build a complete $2 \times 2 \times (n-1)$ pillar, and then add one more brick. 
+            \end{enumerate}
+            Therefore we can get the recursion:
+            \begin{equation*}
+                b_n=a_{n-1}+b_{n-1}
+            \end{equation*}
+            Therefore we can get two recursions:
+            \begin{equation*}
+                \begin{cases}
+                    A(z)=2zA(z)+z^2A(z)+4zB(z)+1\\
+                    B(z)=zA(z)+zB(z)
+                \end{cases}
+            \end{equation*}
+            Solve these two recursions and we can get:
+            \begin{equation*}
+                A(z)=\frac{1-z}{(1+z)(1-4z+z^2)}
+            \end{equation*}
+            Unfold the fraction above and we can get:
+            \begin{equation*}
+                \frac{1-z}{(1+z)(1-4z+z^2)}=\frac{\frac{1}{3}}{1+z}+\frac{\frac{1}{6}}{(2+\sqrt{3})-z}+\frac{\frac{1}{6}}{(2-\sqrt{3})-z}
+            \end{equation*}
+            Because
+            \begin{equation*}
+                \begin{cases}
+                    [z^n]\frac{\frac{1}{3}}{1+z}=\frac{(-1)^n}{3}\\
+                    [z^n]\frac{\frac{1}{6}}{(2+\sqrt{3})-z}=\frac{(2-\sqrt{3})^{n+1}}{6}\\
+                    [z^n]\frac{\frac{1}{6}}{(2-\sqrt{3})-z}=\frac{(2+\sqrt{3})^{n+1}}{6}
+                \end{cases}
+            \end{equation*}
+            Therefore
+            \begin{equation*}
+                a_n=\frac{(2+\sqrt{3})^{n+1}}{6}+\frac{(2-\sqrt{3})^{n+1}}{6}+\frac{(-1)^n}{3}=\frac{(2+\sqrt{3})^{n+1}}{6}\ rounded\ to\ the\ nearest\ integer
+            \end{equation*}
+        \end{solution}
+\end{enumerate}
+
+%========================================================================
+\end{document}

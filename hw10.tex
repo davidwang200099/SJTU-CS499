@@ -1,0 +1,243 @@
+\documentclass[12pt,a4paper]{article}
+%\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{float}
+\usepackage{multirow}
+
+\hypersetup{colorlinks=true,linkcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{CS499 Homework 10}}}}
+\begin{center}
+\footnotesize{\color{blue}$*$ Name:Zehao Wang  \quad Student ID:518021910976}
+\end{center}
+
+\begin{enumerate}
+    \item 
+        How many ways are there to put the numbers $\{1,2,\cdots,2n\}$ into a $2 \times n$ array so that rows and columns are in increasing order from left to right and from top to bottom?
+        \begin{solution}
+        	The upper line can be viewed as the place where we need to put a $1$ and the lower line can be viewed as the place where we need to put a $-1$.
+        	
+        	Then our target is to make sure the sum of the first $i$ places are not smaller than $0$.
+        	
+        	Therefore the answer is $c_n$.
+        \end{solution}
+    \item 
+        Solve the recurrence
+        \begin{equation*}
+            g_0=0,g_1=1
+        \end{equation*}
+        \begin{equation*}
+            g_n=-2ng_{n-1}+\sum_k \binom{n}{k} g_kg_{n-k}(n>1)
+        \end{equation*}
+        by using exponential generating function.
+        \begin{solution}
+        	The recurrence above can be transformed into:
+        	\begin{equation*}
+        	    g_n=-2ng_{n-1}+\sum_k \binom{n}{k} g_kg_{n-k}+[n=1]
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow \frac{g_n}{n!}=-2\frac{g_{n-1}}{(n-1)!}+\sum_k \frac{g_k}{k!}\frac{g_{n-k}}{(n-k)!}+[n=1]
+        	\end{equation*}
+        	Let $a_n=\frac{g_n}{n!}$ and we can get:
+        	\begin{equation*}
+        	    a_n=-2a_{n-1}+\sum_k a_ka_{n-k}+[n=1]
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow \sum_n a_nz^n=-2\sum_n a_{n-1}z^n+\sum_n (\sum_k a_ka_{n-k})z^n+\sum_n [n=1]z^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    \Rightarrow A(z)=-2zA(z)+A^2(z)+z
+        	\end{equation*}
+        	Solving this equation and noticing that when $z=0$, $A(z)=0$, we can get:
+        	\begin{equation*}
+        	    A(z)=\frac{(2z+1)-\sqrt{4z^2+1}}{2}
+        	\end{equation*}
+        	Because 
+        	\begin{equation*}
+        	    \sqrt{4z^2+1}=\sum_k \binom{\frac{1}{2}}{k}(4z^2)^k
+        	\end{equation*}
+        	and consider the property of Catalan number, we can get:
+        	\begin{equation*}
+        	    \begin{cases}
+        	        g_{2n+1}=0\\
+        	        g_{2n}=(-1)^n(2n)!C_{n-1}
+        	    \end{cases}
+        	\end{equation*}
+        \end{solution}
+    \item 
+        The Bell number is the number of ways to partition $n$ things into subsets. Prove that $\varpi_{n+1}=\sum_k\binom{n}{k} \varpi_{n-k}$ and use this recurrence to find a closed form for the exponential generating function $P(z)=\sum_n \frac{\varpi_n}{n!} z^n$.
+        \begin{solution}
+        	To partition $n+1$ things into subsets, we can first choose $k$ things to be partitioned into the same subset as the $n+1$-th thing and then partition the left $n-k$ things into subsets. This proves that
+        	\begin{equation*}
+        	    \varpi_{n+1}=\sum_k \binom{n}{k}\varpi_{n-k}
+        	\end{equation*}
+        	Then we have 
+        	\begin{equation*}
+        	    \sum_n \varpi_{n+1}z^n =\sum_n \binom{n}{k} \varpi_{n-k} z^n
+        	\end{equation*}
+        	\begin{equation*}
+        	    \hat{P}'(z)=e^zP(z)
+        	\end{equation*}
+        	Solve this equation and considering $\hat{P}(0)=1$ and we can get:
+        	\begin{equation*}
+        	    \hat{P}(z)=e^{e^z-1}
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Two sequences $\langle a_n \rangle$ and $\langle b_n \rangle$ are related by the convolution formula
+        \begin{equation}\label{T1}
+            b_n=\sum_{k_1+2k_2+\cdots+nk_n=n}\binom{a_1+k_1-1}{k_1}\binom{a_2+k_2-1}{k_2}\cdots\binom{a_n+k_n-1}{k_n}
+        \end{equation}
+        also $a_0=0$ and $b_0=1$. Prove that the corresponding generating functions satisfy $\ln B(z)=A(z)+\frac{1}{2}A(z^2)+\frac{1}{3}A(z^3)+\cdots$.
+        \begin{solution}
+        	We have know that
+        	\begin{equation*}
+        	    \frac{1}{(1-z)^a}=\sum_k \binom{a+k-1}{k}z^k
+        	\end{equation*}
+        	Therefore 
+        	\begin{equation*}
+        	    \frac{1}{(1-z^i)^{a_i}}=\sum_k \binom{a_i+k+1}{k}(i=1,2,\cdots,n)
+        	\end{equation*}
+        	The right side of equation (\ref{T1}) is the convolution of $\frac{1}{(1-z^i)^{a_i}}$.
+        	Therefore we have
+        	\begin{equation*}
+        	    B(z)=\frac{1}{(1-z)^{a_1}(1-z^2)^{a_2}\cdots}
+        	\end{equation*}
+        	Therefore 
+        	\begin{equation*}
+        	    \ln B(z)=a_1\ln\frac{1}{1-z}+a_2\ln\frac{1}{1-z^2}+a_3\ln\frac{1}{1-z^3}+\cdots
+        	\end{equation*}
+        	\begin{equation*}
+        	    =a_1(z+\frac{1}{2}z^2+\frac{1}{3}z^3+\cdots)+a_2(z^2+\frac{1}{2}z^4+\cdots)+\cdots
+        	\end{equation*}
+        	\begin{equation*}
+        	    =(a_1z+a_2z^2+\cdots)+\frac{1}{2}(a_1z^2+a_2z^4+\cdots)+\frac{1}{3}(a_1z^3+a_2z^6+\cdots)+\cdots
+        	\end{equation*}
+        	\begin{equation*}
+        	    =A(z)+\frac{1}{2}A(z^2)+\frac{1}{3}A(z^3)+\cdots
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Show that the exponential generating function $\hat{G}(z)$ of a sequence is related to the ordinary generating function $G(z)$ by the formula 
+        \begin{equation*}
+            \int_{0}^{\infty} \hat{G}(zt)e^{-t}dt=G(z)
+        \end{equation*}
+        if the integral exists.
+        \begin{solution}
+        	We have 
+        	\begin{equation*}
+        	    \hat{G}(zt)e^{-t}dt=\sum_n \frac{g_n}{n!}z^nt^ne^{-t}dt
+        	\end{equation*}
+        	Considering that $\int_{0}^{\infty}t^ne^{-t}dt=n!$, we can get:
+        	\begin{equation*}
+        	    \sum_n \frac{g_n}{n!}z^n \int_{0}^{\infty} t^ne^{-t}dt=\sum_n \frac{g_n}{n!} n!z^n=\sum_n g_nz^n=G(z) 
+        	\end{equation*}
+        \end{solution}
+    \item 
+        Find the Dirichlet generating functions for the sequences 
+        \begin{enumerate}
+        	\item 
+        	    $g_n=\sqrt{n}$
+        	\item 
+        	    $g_n=\ln n$
+        	\item 
+        	    $g_n=[n\ is\ squarefree]$
+        \end{enumerate}
+        Express your answers in terms of the zeta function.
+        \begin{solution}
+        	\begin{enumerate}
+        		\item 
+        		    \begin{equation*}
+        		        \hat{G}(z)=\sum_{n\ge 1}\frac{\sqrt{n}}{n^z}=\sum_{n \ge 1}\frac{1}{n^{z-\frac{1}{2}}}
+        		    \end{equation*}
+        		    Therefore its Dirichlet generating function is $\zeta(z-\frac{1}{2})$.
+        		\item 
+        		    We have
+        		    \begin{equation*}
+        		        \sum_{n \ge 1}\frac{1}{n^z}=\zeta(z)
+        		    \end{equation*}
+        		    Therefore
+        		    \begin{equation*}
+        		        \sum_{n \ge 1}-n^{-z}\ln z=\zeta'(z)
+        		    \end{equation*}
+        		    Therefore its generating function is $-\zeta'(z)$.
+        		\item 
+        		    When $m$ and $n$ are both squarefree and they are relatively prime, we can know that
+        		    \begin{equation*}
+        		        \begin{cases}
+        		            m=\Pi_{j_i} p_{j_i}\\
+        		            n=\Pi_{k_i} p_{k_i}
+        		        \end{cases}
+        		    \end{equation*}
+        		    where $p_n$ is the $n$-th prime, $j_a<j_b$ for any $a<b$ and $j_a \neq k_b$ for any $a,b$.
+        		    
+        		    This time $mn$ is also square free.$g_{mn}=g_mg_n=1$
+        		    
+        		    Meanwhile, if $m$ or $n$ is not squarefree, then $mn$ is not squarefree, either. This time $g_{mn}=0$.
+        		    
+        		    This means that $\langle g_1,g_2,\cdots \rangle$ is multiplicative function.
+        		    
+        		    Therefore by (7.90) we have:
+        		    \begin{equation*}
+        		        \widetilde{G}(z)=\prod_{p\ prime}(1+\frac{g_p}{p^z}+\frac{g_{p^2}}{p^{2z}}+\cdots)
+        		    \end{equation*}
+        		    \begin{equation*}
+        		        =\prod_{p\ prime}(1+\frac{1}{p^z})
+        		    \end{equation*}
+        		    \begin{equation*}
+        		        =\prod_{p\ prime}\frac{(1-p^{-z})(1+p^{-z})}{1-p^{-z}}
+        		    \end{equation*}
+        		    \begin{equation*}
+        		        =\prod_{p\ prime}\frac{1-p^{-2z}}{1-p^{-z}}
+        		    \end{equation*}
+                    \begin{equation*}
+                        =\prod_{p\ prime}\frac{\zeta(z)}{\zeta(2z)}
+                    \end{equation*}
+        	\end{enumerate}
+        \end{solution}
+\end{enumerate}
+
+%========================================================================
+\end{document}
