@@ -1,0 +1,424 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{array}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{CS499 Homework 11}}}}
+\begin{center}
+\footnotesize{\color{blue}$*$ Name:Zehao Wang  \quad Student ID:518021910976}
+\end{center}
+\begin{enumerate}
+	\item
+	Solve the recurrence
+	\begin{equation*}
+	    Q_0=\alpha;\ Q_1=\beta;
+	    Q_n=\frac{1+Q_{n-1}}{Q_{n-2}},\ for\ n>1
+	\end{equation*}
+	Assume that $Q_n\neq 0$ for all $n\ge0$.
+	\begin{solution}
+	    According to the recurrence above, we can know that $Q_2=\frac{1+\beta}{\alpha}$, $Q_3=\frac{\alpha+\beta+1}{\alpha\beta}$, $Q_4=\frac{1+\alpha}{\beta}$, $Q_5=\alpha$.
+	    
+	    Then we miraculously find that $Q_5=Q_0$. Therefore we can know that $Q_{n}=Q_{n+5}$.
+	    
+	    Therefore,
+	    \begin{equation*}
+	        \begin{cases}
+	            Q_{4k}=\alpha\\
+	            Q_{4k+1}=\beta\\
+	            Q_{4k+2}=\frac{1+\beta}{\alpha}\\
+	            Q_{4k+3}=\frac{\alpha+\beta+1}{\alpha\beta}\\
+	            Q_{4k+4}=\frac{1+\alpha}{\beta}\\
+	        \end{cases}
+	    \end{equation*}
+	\end{solution}
+    \item
+    Suppose there are $2n$ people in a circle. The first $n$ are good guys and the last $n$ are bad guys.  Show that there is always an integer $m$(depending on $n$) such that, if we go around the circle executing every $m$-th person, all the bad guys are first to go. (For example, when $n=3$ we can take $m=5$; when $n=4$ we can take $m=30$.)
+    \begin{solution}
+        To let the $2n$-th, $(2n-1)$-th, $\cdots$, $(n+1)$-th person to be executed first, we can make $m$ to be a common multiple of $2n$, $(2n-1)$, $\cdots$, $(n+1)$.
+    \end{solution}
+    \item 
+    What is the law of exponents for rising factorial powers, analogous to (2.52)? Use this to define $x^{\overline{-n}}$.
+    \begin{solution}
+        	$x^{\overline{m+n}}=x^{\overline{m}}(x+m)^{\overline{n}}$.
+        	
+        	\quad$x^{\overline{0}}$
+        	
+        	$=x^{\overline{(-n)+n}}$
+        	
+        	$=x^{\overline{-n}} (x-n)^{\overline{n}}$
+        	
+        	$=x^{\overline{-n}}[(x-n)(x-n+1)\cdots(x-1)]$
+        	
+        	$=1$.
+        	
+        	Therefore $x^{\overline{-n}}=\frac{1}{(x-1)^{\underline{n}}}$.
+        \end{solution}
+    \item 
+    The text derives the following formula for the difference of a product:
+    \begin{equation*}
+        \Delta(uv)=u\Delta v+Ev\Delta u.
+    \end{equation*}
+    How can this formula be correct, when the left-hand side is symmetric with respect to $u$ and $v$ but the right hand side is not?
+            \begin{solution}
+        	\quad\\
+        	$u\Delta v+Ev\Delta u=u(x)(v(x+1)-v(x))+v(x+1)(u(x+1)-u(x))=uEv-uv+EuEv-uEv=u(x+1)v(x+1)-u(x)v(x)=\Delta(uv)$.
+        	
+        	$v\Delta u+Eu\Delta v=v(x)(u(x+1)-u(x))+u(x+1)(v(x+1)-v(x))=vEu-uv+EuEv-vEu=\Delta(uv) $.
+        	
+        	Therefore it does not matter the right-hand side is not symmetric.They are the same.
+        \end{solution}
+    \item
+    Egyptian mathematicians in 1800 B.C.  represented rational numbers between 0 and 1 as sums of unit fractions $\frac{1}{x_1}+\frac{1}{x_2}+\cdots+\frac{1}{x_k}$, where the $x$'s were distinct positive numbers. For example, they wrote $\frac{1}{3}+\frac{1}{15}$ instead of $\frac{2}{5}$. Prove that it is always possible to do this in a systematic way: If $0<\frac{m}{n}<1$, then
+        \begin{equation*}
+            \frac{m}{n}=\frac{1}{q}+\{representation\ of\ \frac{m}{n}-\frac{1}{q}\},\quad q=\lceil \frac {n}{m}\rceil.
+        \end{equation*} 
+        \begin{solution}
+        	\begin{equation*}
+        	    \frac{m}{n}-\frac{1}{q}=\frac{m\lceil \frac{n}{m}\rceil -n}{n\lceil \frac{n}{m} \rceil}.
+        	\end{equation*}
+        	Let $n=km+b$, where $k=\lfloor \frac{n}{m} \rfloor$ and $b=n\ mod\ m$.Then we can get :
+        	\begin{equation*}
+        	    \frac{m\lceil \frac{n}{m}\rceil -n}{n\lceil \frac{n}{m} \rceil}=\frac{m(k+1)-mk-b}{n\lceil \frac{n}{m}\rceil}=\frac{m-n\ mod\ m}{n\lceil \frac{n}{m}\rceil}
+        	\end{equation*}
+        	Because $0<n\ mod\ m<m$($n\ mod\ m$ can not be $0$ because $n$ and $m$ are relatively prime), we can get $0<m-n\ mod\ m<m$.
+        	
+        	%Because $0<\frac{m}{n}<1$, we can get $\lceil \frac{n}{m} \rceil>1$.Therefore $n\lceil \frac{n}{m}\rceil>n$.
+        	
+        	Let $m'=m-n\ mod\ m<m$,$n'=n\lceil \frac{n}{m}\rceil$ and $q'=\lceil \frac{n'}{m'} \rceil$, then we have:
+        	\begin{equation*}
+        	    q'=\lceil\lceil\frac{n}{m}\rceil\times\frac{n}{m=m\ mod\ m}\rceil=\lceil q\times\frac{n}{m-n\ mode\ m}\rceil.
+        	\end{equation*}
+            Because we have
+            \begin{equation*}
+            	\frac{n}{m-n\ mode\ m}=\frac{km+b}{m'}\ge\frac{km}{m'}>k\ge 1
+            \end{equation*}
+            Therefore
+        	\begin{equation*}
+        	    q\times\frac{n}{m-n\ mode\ m}>q.
+        	\end{equation*}
+        	Because $q$ is an integer, then we have:
+        	\begin{equation*}
+        	    q'=\lceil q\times\frac{n}{m-n\ mod\ m}\rceil>q
+        	\end{equation*}
+        	This means $x_k$'s are increasing, which satisfies the $x_k$'s are distinct positive integers.
+        	
+        	Because $m'<m$, therefore the numerator part of $\frac{m}{n}$ is decreasing, which guarantees that $m$ will descend to 1 and terminate the procedure after finitely many steps.
+        	
+        	Therefore, it is always possible to do this in a systematic way.
+        	
+        \end{solution}
+    \item 
+        Show that the expression 
+        \begin{equation*}
+            \lceil \frac{2x+1}{2} \rceil-\lceil \frac{2x+1}{4} \rceil +\lfloor \frac{2x+1}{4} \rfloor
+        \end{equation*}
+        is always $\lfloor x \rfloor$ or $\lceil x \rceil$ . In what circumstances does each cases arise?
+    \begin{solution}
+        We have the formula
+        \begin{equation*}
+            \lceil x \rceil - \lfloor x \rfloor=
+            \begin{cases}
+                0&x\in \mathbb{Z}\\
+                1&x\notin \mathbb{Z}
+            \end{cases}
+        \end{equation*}
+        Therefore $\lceil \frac{2x+1}{4} \rceil -\lfloor \frac{2x+1}{4} \rfloor$ is always $1$ or $0$.
+        \begin{enumerate}
+            \item When it is $1$, we have 
+            \begin{equation*}
+                \lceil \frac{2x+1}{x} \rceil-1=\lceil x+\frac{1}{2}-1 \rceil
+            \end{equation*}
+            \begin{equation*}
+                =\lceil x-\frac{1}{2} \rceil
+            \end{equation*}
+            \begin{itemize}
+                \item When $k<x<k+0.5$, $k-0.5<x-0.5<k$. Therefore $\lceil x-\frac{1}{2} \rceil=\lfloor x \rfloor $.
+                \item When $k+0.5<x<k+1$, $k<x-0.5<k+0.5$. Therefore $\lceil x-\frac{1}{2} \rceil=\lceil x \rceil$.
+            \end{itemize}
+            \item When it is $0$, we have
+            \begin{equation*}
+                \frac{2x+1}{4}=k \Rightarrow x=\frac{4k-1}{2}
+            \end{equation*}
+            And $x+\frac{1}{2}=2k\in \mathbb{Z}$. This time $\lceil \frac{2x+1}{2} \rceil=\lceil x \rceil $.
+        \end{enumerate}
+        Therefore we can know the formula above is always $\lfloor x \rfloor$ or $\lceil x \rceil$.
+    \end{solution}
+    \item 
+    Compute $\phi(999)$.
+    \begin{solution}
+	    	$999=37\times3^3$.
+	    	
+	    	Therefore $\phi(999)=\phi(37)\times\phi(3^3)$.
+	    	
+	    	$\phi(37)=37-1=36$, $\phi(3^3)=3^3-3^2=18$.
+	    	
+	    	Therefore $\phi(999)=36\times 18=648$.
+	\end{solution}
+    \item 
+    Prove or disprove:
+    \begin{enumerate}
+        \item $gcd(km,kn)=k gcd(m,n)$
+        \item $lcm(km,kn)=k lcm(m,n)$
+    \end{enumerate}
+    \begin{solution}
+        \begin{enumerate}
+            \item 
+            According to the definition of Greatest Common Divisor, we have 
+            \begin{equation*}
+                \begin{cases}
+                    m=gcd(m,n)\times m_1\\
+                    n=gcd(m,n)\times n_1
+                \end{cases}
+            \end{equation*}
+            where $m_1$ and $n_1$ are relatively prime.
+            Then we have
+            \begin{equation*}
+                \begin{cases}
+                    km=kgcd(m,n)\times m_1\\
+                    kn=kgcd(m,n)\times n_1
+                \end{cases}
+            \end{equation*}
+            Therefore by definition, $gcd(km,kn)=kgcd(m,n)$.
+            \item 
+            According to the property of Least Common Multiplier, we have
+            \begin{equation*}
+                    lcm(m,n)=gcd(m,n)\times m_1 \times n_1.
+            \end{equation*}
+            Therefore we have
+            \begin{equation*}
+                    lcm(km,kn)=gcd(km,kn)\times\frac{km}{gcd(km,kn)}\times \frac{kn}{gcd(km,kn)}
+            \end{equation*}
+            \begin{equation*}
+                    =kgcd(m,n)\times \frac{km}{kgcd(m,n)}\times \frac{kn}{kgcd(m,n)}
+            \end{equation*}
+            \begin{equation*}
+                    =kgcd(m,n)\times m_1 \times m_2
+            \end{equation*}
+            \begin{equation*}
+                    =klcm(m,n)
+            \end{equation*}
+            Therefore $lcm(km,kn)=klcm(m,n)$
+        \end{enumerate}
+    \end{solution}
+    \item 
+    Prove the hexagon property,
+    \begin{equation*}
+            \binom{n-1}{k-1}\binom{n}{k+1}\binom{n+1}{k}=\binom{n-1}{k}\binom{n+1}{k+1}\binom{n}{k-1}
+        \end{equation*}
+        
+        \begin{proof}
+        	\begin{equation*}
+        	    \binom{n-1}{k-1}\binom{n}{k+1}\binom{n+1}{k}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{(n-1)^{\underline{k-1}}}{(k-1)!}\times\frac{n^{\underline{k+1}}}{(k+1)!}\times\frac{(n+1)^{\underline{k}}}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{(n-1)(n-2)\cdots(n-k+1)}{(k-1)!}\times\frac{n(n-1)(n-2)\cdots(n-k)}{(k+1)!}\times\frac{(n+1)n\cdots(n-k+2)}{k!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{n(n-1)(n-2)\cdots(n-k)}{(k-1)!}\times\frac{(n-1)(n-2)\cdots(n-k)}{k!}\times\frac{(n+1)n(n-1)\cdots(n-k+2)(n-k+1)}{(k+1)!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\frac{n^{\underline{k-1}}}{(k-1)!}\times\frac{(n-1)^{\underline{k}}}{k!}\times\frac{(n+1)^{\underline{k+1}}}{(k+1)!}
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\binom{n-1}{k}\binom{n+1}{k+1}\binom{n}{k-1}
+        	\end{equation*}
+        	
+        \end{proof}
+    \item 
+    Find relations between the superfactorial function $P_n=\prod_{k=1}^{n} k!$ of exercise 4.55, the hyperfactorial function $Q_n=\prod_{k=1}^{n} k^k$ and the product $R_n=\prod_{k=0}^{n}\binom{n}{k}$.
+    \begin{solution}
+        We have
+        \begin{equation*}
+            \binom{n}{k}=\frac{n^{\underline{k}}}{k!}
+        \end{equation*}
+        Therefore
+        \begin{equation*}
+            R_n=\prod_{k=1}^{n}\binom{n}{k}=\prod_{k=1}^{n}\frac{n^{\underline{k}}}{k!}=\frac{\prod_{k=1}^{n}n^{\underline{k}}}{P_n}
+        \end{equation*}
+        Because
+        \begin{equation*}
+            n^{\underline{k}}=n(n-1)(n-2)\cdots(n-k+1)
+        \end{equation*}
+        Therefore
+        \begin{equation*}
+            \prod_{k=1}^{n}n^{\underline{k}}=n \times(n(n-1)) \times (n(n-1)(n-2)) \times (n(n-1)(n-2)(n-3))\times \cdots
+        \end{equation*}
+        \begin{equation*}
+            =n^n \times (n-1)^{n-1} \times (n-2)^{n-2} \times \cdots
+        \end{equation*}
+        \begin{equation*}
+            =\prod_{k=1}^{n} k^k=Q_n
+        \end{equation*}
+        Therefore
+        \begin{equation*}
+            R(n)=\frac{Q(n)}{P(n)}
+        \end{equation*}
+    \end{solution}
+    \item
+     What is $\sum_{k}(-1)^k {n \brack k}$, the row sum of Stirling's cycle-number triangle with alternating signs, when $n$ is a nonnegative integer?
+       \begin{solution}
+    	We have the formula
+    	\begin{equation}\label{E1}
+    	    x^{\overline{n}}=\sum_{k}{n \brack k}x^k
+    	\end{equation}
+    
+    	Let $x=-1$, the right hand side of (\ref{E1}) is $\sum_{k}(-1)^k$.
+    	
+    	And the left hand side is $(-1)^{\overline{n}}$.
+    	
+    	According to the definition of raising power, 
+    	\begin{enumerate}
+    		\item 
+    		    when $n=0$, $(-1)^{\overline{0}}=1$.
+    		\item 
+    		    when $n=1$, $(-1)^{\overline{1}}=-1$.
+    		\item 
+    		    when $n\ge 1$, $(-1)^{\overline{n}}=0$.
+    		\item 
+    		    when $n<0$, by definition $(-1)^{\overline{n}}=0$
+    	\end{enumerate}
+    	Therefore, the result can be transformed into:
+       \begin{equation*}
+            \sum_k(-1)^k {n \brack k}=[n=0]-[n=1].
+         \end{equation*}
+      \end{solution}
+    \item
+    Prove that Stirling numbers have an inversion law analogous to (5.48):
+        \begin{equation*}
+           g(n)=\sum_k{n \brace k}(-1)^kf(k) \Leftrightarrow f(n)=\sum_k{n \brack k}(-1)^kg(k)
+        \end{equation*}
+        \begin{solution}
+        	Assume that the left hand side makes sense.
+        	
+        	Then for the right hand side,
+        	\begin{equation*}
+        	    \sum_k{n \brack k}(-1)^kg(k)
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_k{n \brack k}(-1)^k (\sum_j{n \brace j} (-1)^j f(j))
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_k\sum_j{ n \brack k}{k \brace j} (-1)^k (-1)^j f(j)
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_j f(j) (-1)^j \sum_k {n \brack k}{k \brace j}(-1)^k 1^j
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_j f(j) (-1)^{n-j} \sum_k {n \brack k}{k \brace j}(-1)^{n-k} 1^j
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_j f(j) (-1)^{n-j} [n=j]
+        	\end{equation*}
+        	\begin{equation*}
+        	    =f(n).
+        	\end{equation*}
+        	
+        	Assume that the right hand side makes sense, then just the same as above,
+        	\begin{equation*}
+        	    \sum_k{n \brace k}(-1)^kf(k)
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_k{n \brace k}(-1)^k \sum_j {n \brack j}(-1)^j g(j)
+        	\end{equation*}
+        	\begin{equation*}
+        	    =\sum_j g(j)(-1)^{n-j}[n=j]
+        	\end{equation*}
+        	\begin{equation*}
+        	    =g(n)
+        	\end{equation*}
+        	
+        	Therefore the statement above makes sense.
+        \end{solution}
+        \item 
+        What is the general solution of the double recurrence
+        \begin{equation*}
+            A_{n,0}=a_n[n \ge 0];\quad A_{0,k}=0,\quad if\ k>0;
+        \end{equation*}
+        \begin{equation*}
+            A_{n,k}=kA_{n-1,k}+A_{n-1,k-1},\quad integers\ k,n,
+        \end{equation*}
+        when $k$ and $n$ range over the set of all integers?
+        \begin{solution}
+        	The recursion $A_{n,k}=kA_{n-1,k}+A_{n-1,k-1}$ looks like that of Stirling number of the second kind, but the values $A_{n,0}$ are different.
+        	
+        	I guess the answer should be
+        	\begin{equation*}
+        	    A_{n,k}=\sum_{j\ge 0} a_j {n-j \brace k}
+        	\end{equation*}
+        	
+        	Then we can Prove it by induction.
+        	
+        	\begin{itemize}
+        		\item
+        		    When $n=0$ and $k\neq 0$, it is obvious that $A_{0,k}=a_0{0 \brace k}=0$.
+        		\item 
+        		    When $n\neq 0$ and $k=0$, $A_{n,0}=\sum_{j \ge 0}a_j{n-j \brace 0}=a_n$.
+        		\item 
+        		    When $n=0$ and $k=0$, $A_{0,0}=a_0$.
+        		\item 
+        		    Then when $n>0$ and $k>0$, assume that $A_{n-1,k}=\sum_{j\ge 0} a_j {n-1-j \brace k}$ and $A_{n-1,k-1} =\sum_{j\ge 0} a_j {n-1-j \brace k-1}$
+        		    
+        		    Then 
+        		    \begin{equation*}
+        		        A_{n,k}=k\times \sum_{j\ge 0} a_j {n-1-j \brace k}+\sum_{j\ge 0} a_j {n-1-j \brace k-1}
+        		    \end{equation*}
+        		    \begin{equation*}
+        		        =\sum_{j \ge 0} a_j(k{n-1-j \brace k}{n-1-j \brace k-1})
+        		    \end{equation*}
+        		    \begin{equation*}
+        		        =\sum_{j\ge 0} a_j{n-j \brace k}
+        		    \end{equation*}
+        		\item 
+        		    Therefore, the statement is true.
+        	\end{itemize}
+        \end{solution}
+\end{enumerate}
+
+
+
+%========================================================================
+\end{document}
